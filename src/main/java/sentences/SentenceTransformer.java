@@ -21,6 +21,5 @@ public class SentenceTransformer {
         if (!(lastChar == '.' || lastChar == '!' || lastChar == '?')) {
             throw new IllegalArgumentException("Must end with . ! or ?");
         }
-
     }
 }
