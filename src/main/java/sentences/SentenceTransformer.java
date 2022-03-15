@@ -2,24 +2,36 @@ package sentences;
 
 public class SentenceTransformer {
 
+    public static final String ENDS = ".!?";
+
     public String shortenSentence(String sentence) {
-        validateSentenceFirstCharAndLastChar(sentence);
+        isValidSentence(sentence);
         String[] parts = sentence.split(" ");
         if (parts.length < 5) {
             return sentence;
         } else {
-            return parts[0] + " ... " + parts[parts.length - 1];
+            return new StringBuilder(parts[0]).append(" ... ").append(parts[parts.length - 1]).toString();
         }
     }
 
-    private void validateSentenceFirstCharAndLastChar(String sentence) {
-        char firstChar = sentence.charAt(0);
-        char lastChar = sentence.charAt(sentence.length() - 1);
-        if (Character.isLowerCase(firstChar)) {
+    private boolean isValidSentence(String sentence) {
+        return isValidStarting(sentence) && isValidEnding(sentence);
+    }
+
+    private boolean isValidStarting(String sentence) {
+        if (sentence.charAt(0) == sentence.toUpperCase().charAt(0)) {
+            return true;
+        } else {
             throw new IllegalArgumentException("Must start with capital letter!");
         }
-        if (!(lastChar == '.' || lastChar == '!' || lastChar == '?')) {
+    }
+
+    private boolean isValidEnding(String sentence) {
+        if (ENDS.contains("" + sentence.charAt(sentence.length() - 1))) {
+            return true;
+        } else {
             throw new IllegalArgumentException("Must end with . ! or ?");
         }
     }
+
 }
