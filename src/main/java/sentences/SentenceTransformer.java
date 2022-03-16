@@ -33,5 +33,4 @@ public class SentenceTransformer {
             throw new IllegalArgumentException("Must end with . ! or ?");
         }
     }
-
 }
