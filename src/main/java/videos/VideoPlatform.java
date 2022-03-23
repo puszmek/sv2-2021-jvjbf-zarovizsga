@@ -17,7 +17,8 @@ public class VideoPlatform {
 
     public void readDataFromFile(Path path) {
         try (BufferedReader br = Files.newBufferedReader(path)) {
-            String line = br.readLine();
+            br.readLine();
+            String line;
             while ((line = br.readLine()) != null) {
                 parseLine(line);
             }
