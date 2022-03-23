@@ -1,6 +1,7 @@
 package shipping;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ShippingService {
 
@@ -11,31 +12,44 @@ public class ShippingService {
     }
 
     public List<Transportable> getPackages() {
-        return packages;
+        return new ArrayList<>(packages);
     }
 
     public List<Transportable> collectItemsByBreakableAndWeight(boolean breakable, int weight) {
-        List<Transportable> result = new ArrayList<>();
-        for (Transportable actual : packages) {
-            if (actual.getWeight() >= weight && actual.isBreakable() == breakable) {
-                result.add(actual);
-            }
-        }
-        return result;
+        return packages.stream()
+                .filter(packages -> packages.isBreakable() == breakable)
+                .filter(packages -> packages.getWeight() >= weight)
+                .toList();
+
+//        List<Transportable> result = new ArrayList<>();
+//        for (Transportable actual : packages) {
+//            if (actual.getWeight() >= weight && actual.isBreakable() == breakable) {
+//                result.add(actual);
+//            }
+//        }
+//        return result;
     }
 
     public List<Transportable> sortInternationalPackagesByDistance() {
-        return packages.stream()
-                .filter(transportable -> transportable instanceof InternationalPackage)
-                .sorted(Comparator.comparing(p -> ((InternationalPackage) p).getDistance()))
-                .toList();
+        return new ArrayList<>(packages.stream()
+                .filter(packages -> !packages.getDestinationCountry().equals(Transportable.DESTINATION_COUNTRY))
+                .sorted(Comparator.comparingInt(packages -> ((InternationalPackage) packages).getDistance()))      // .map(pack -> ((InternationalPackage)pack))
+                .toList());                                                                                        // .sorted(Comparator.comparingInt(InternationalPackage::getDistance))
     }
 
     public Map<String, Integer> collectTransportableByCountry() {
-        Map<String, Integer> result = new LinkedHashMap<>();
-        for (Transportable transportable : packages) {
+        return packages.stream()
+                .collect(Collectors.toMap(Transportable::getDestinationCountry, packages -> 1, Integer::sum));
 
-        }
-        return result;
+//        Map<String, Integer> result = new HashMap<>();
+//        for (Transportable actual: packages) {
+//            String key = actual.getDestinationCountry();
+//            if (!result.containsKey(key)) {
+//                result.put(key, 1);
+//            } else {
+//                result.put(key, result.get(key) + 1);
+//            }
+//        }
+//        return result;
     }
 }

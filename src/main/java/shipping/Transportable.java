@@ -2,6 +2,8 @@ package shipping;
 
 public interface Transportable {
 
+    String DESTINATION_COUNTRY = "Hungary";
+
     public int getWeight();
 
     public boolean isBreakable();
@@ -9,6 +11,6 @@ public interface Transportable {
     public int calculateShippingPrice();
 
     default String getDestinationCountry() {
-        return "Hungary";
+        return DESTINATION_COUNTRY;
     }
 }

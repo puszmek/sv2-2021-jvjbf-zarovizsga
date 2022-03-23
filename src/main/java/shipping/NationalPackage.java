@@ -2,10 +2,10 @@ package shipping;
 
 public class NationalPackage implements Transportable {
 
+    private static final int SHIPPING_PRICE = 1000;
+
     private int weight;
     private boolean breakable;
-
-    private static final int SHIPPING_PRICE = 1000;
 
     public NationalPackage(int weight, boolean breakable) {
         this.weight = weight;
@@ -29,5 +29,8 @@ public class NationalPackage implements Transportable {
         } else {
             return SHIPPING_PRICE;
         }
+
+        // return isBreakable ? SHIPPING_PRICE * 2 : SHIPPING_PRICE;
     }
+
 }

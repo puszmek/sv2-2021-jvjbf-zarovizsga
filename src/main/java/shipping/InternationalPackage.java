@@ -2,13 +2,13 @@ package shipping;
 
 public class InternationalPackage implements Transportable {
 
+    private static final int SHIPPING_PRICE = 1200;
+    private static final int PRICE_PER_KM = 10;
+
     private int weight;
     private boolean breakable;
     private String destinationCountry;
     private int distance;
-
-    private static final int SHIPPING_PRICE = 1200;
-    private static final int PRICE_PER_KM = 10;
 
     public InternationalPackage(int weight, boolean breakable, String destinationCountry, int distance) {
         this.weight = weight;
@@ -39,9 +39,9 @@ public class InternationalPackage implements Transportable {
     @Override
     public int calculateShippingPrice() {
         if (breakable) {
-            return 2 * SHIPPING_PRICE + (distance * PRICE_PER_KM);
+            return 2 * SHIPPING_PRICE + distance * PRICE_PER_KM;
         } else {
-            return SHIPPING_PRICE + (distance * PRICE_PER_KM);
+            return SHIPPING_PRICE + distance * PRICE_PER_KM;
         }
     }
 }
